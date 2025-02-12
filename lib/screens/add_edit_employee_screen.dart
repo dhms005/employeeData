@@ -182,6 +182,7 @@ class _AddEditEmployeeScreenState extends State<AddEditEmployeeScreen> {
                             DateSelectionField(
                               placeholder: AppStrings.noDate,
                               width: fieldWidth,
+                              controller:_startDateController ,
                               initialDate: widget.employee == null
                                   ? null
                                   : dateFormat.parse(_startDateController.text),
@@ -205,6 +206,7 @@ class _AddEditEmployeeScreenState extends State<AddEditEmployeeScreen> {
                             DateSelectionField(
                               placeholder: AppStrings.noDate,
                               width: fieldWidth,
+                              controller: _endDateController,
                               initialDate: widget.employee == null
                                   ? null
                                   : (_endDateController.text.isEmpty
