@@ -3,18 +3,21 @@ import 'package:flutter/widgets.dart';
 
 class TextRobotoFont extends StatelessWidget {
   final String title;
-  final bool isBold;
   final bool isItalic;
   final double fontSize;
   final Color fontColor;
+  final TextAlign textAlign;
+  final FontWeight fontWeight;
 
   const TextRobotoFont(
       {super.key,
       required this.title,
-      this.isBold = false,
       this.isItalic = false,
       this.fontSize = 18,
-      this.fontColor = AppColors.mainColor});
+      this.fontColor = AppColors.mainColor,
+      this.textAlign = TextAlign.left,
+      this.fontWeight = FontWeight.normal
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +28,10 @@ class TextRobotoFont extends StatelessWidget {
         fontSize: fontSize,
         fontFamily: 'Roboto',
         // Specify font family explicitly
-        fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+        fontWeight: fontWeight,
         fontStyle: isItalic ? FontStyle.italic : FontStyle.normal,
       ),
+      textAlign: textAlign,
     );
   }
 }

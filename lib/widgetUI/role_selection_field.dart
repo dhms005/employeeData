@@ -1,6 +1,7 @@
 import 'package:employeedata/utils/appColors.dart';
 import 'package:employeedata/utils/appImagePath.dart';
 import 'package:employeedata/utils/appStrings.dart';
+import 'package:employeedata/widgetUI/textRobotoFont.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -40,10 +41,35 @@ class _RoleSelectionFieldState extends State<RoleSelectionField> {
     }
   }
 
+  void _showRoleBottomSheet() async {
+    String? selectedRole = await showModalBottomSheet<String>(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (BuildContext context) {
+        return Wrap(
+          children: AppStrings.employeeRoles.map((role) {
+            return ListTile(
+              title: TextRobotoFont(title: role, textAlign: TextAlign.center,fontColor: AppColors.editTextColor,fontSize: 16,),
+              onTap: () => Navigator.pop(context, role),
+            );
+          }).toList(),
+        );
+      },
+    );
+
+    if (selectedRole != null) {
+      setState(() {
+        widget.controller.text = selectedRole;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _showRoleDialog,
+      onTap: _showRoleBottomSheet,
       child: AbsorbPointer(
         child: TextFormField(
           controller: widget.controller,

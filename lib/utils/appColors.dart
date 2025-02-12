@@ -5,6 +5,7 @@ class AppColors {
   static const Color mainColor = Color(0xFF1DA1F2);
   static const Color mainDarkColor = Color(0xFF0E8AD7);
   static const Color disabledButtonColor = Color(0xFFa9a9a9);
+  static const Color lightButtonBgColor = Color(0xFFEDF8FF);
 
   static const Color editTextBorderColor = Color(0xFFE5E5E5);
   static const Color editTextHintColor = Color(0xFF949C9E);
