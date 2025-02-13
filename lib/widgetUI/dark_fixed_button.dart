@@ -26,7 +26,7 @@ class DarkFixedButton extends StatelessWidget {
         title: text,
         fontSize: 14,
         textAlign: TextAlign.center,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.values[5],
       ),
     );
   }

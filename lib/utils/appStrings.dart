@@ -9,6 +9,10 @@ class AppStrings {
   static const String noDate = "No date";
   static const String save = "Save";
   static const String cancel = "Cancel";
+  static const String currentEmployees = "Current employees";
+  static const String previousEmployees = "Previous employees";
+  static const String swipeLeftToDelete = "Swipe left to delete";
+  static const String noEmployeeRecordsFound = "No employee records found";
 
 
 
