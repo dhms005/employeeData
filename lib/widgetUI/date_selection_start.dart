@@ -40,22 +40,6 @@ class _DateSelectionStartState extends State<DateSelectionStart> {
     selectedDate = widget.initialDate;
   }
 
-  Future<void> _pickDate(BuildContext context) async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-
-    if (picked != null) {
-      setState(() {
-        selectedDate = picked;
-      });
-      widget.onDateSelected(picked);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

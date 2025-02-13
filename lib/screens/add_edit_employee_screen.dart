@@ -210,6 +210,7 @@ class _AddEditEmployeeScreenState extends State<AddEditEmployeeScreen> {
                                 _startDateController.text =
                                     dateFormat.format(date!);
                               },
+
                             ),
 
                             // Arrow Icon in Center
