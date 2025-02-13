@@ -191,7 +191,7 @@ class EmployeeListScreen extends StatelessWidget {
           //       Image.asset('assets/images/not_data.png', fit: BoxFit.fitWidth),
           // ),
           SvgPicture.asset(
-            AppImagePath.notDataSvg,
+            AppImagePath.imgNoData,
             width: 250,
           ),
           TextRobotoFont(
