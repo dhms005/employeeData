@@ -11,14 +11,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class DateSelectionField extends StatefulWidget {
+class DateSelectionStart extends StatefulWidget {
   final String placeholder;
   final ValueChanged<DateTime?> onDateSelected;
   final double width;
   DateTime? initialDate;
   TextEditingController controller;
 
-  DateSelectionField(
+  DateSelectionStart(
       {super.key, required this.placeholder,
       required this.onDateSelected,
       required this.width,
@@ -26,10 +26,10 @@ class DateSelectionField extends StatefulWidget {
       this.initialDate});
 
   @override
-  _DateSelectionFieldState createState() => _DateSelectionFieldState();
+  _DateSelectionStartState createState() => _DateSelectionStartState();
 }
 
-class _DateSelectionFieldState extends State<DateSelectionField> {
+class _DateSelectionStartState extends State<DateSelectionStart> {
   DateTime? selectedDate;
   final DateFormat dateFormat = DateFormat('d MMM yyyy');
 

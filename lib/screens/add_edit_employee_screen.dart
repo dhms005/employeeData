@@ -3,7 +3,8 @@ import 'package:employeedata/utils/appImagePath.dart';
 import 'package:employeedata/utils/appStrings.dart';
 import 'package:employeedata/widgetUI/customAppBar.dart';
 import 'package:employeedata/widgetUI/dark_fixed_button.dart';
-import 'package:employeedata/widgetUI/date_selection_field.dart';
+import 'package:employeedata/widgetUI/date_selection_end.dart';
+import 'package:employeedata/widgetUI/date_selection_start.dart';
 import 'package:employeedata/widgetUI/light_fixed_button.dart';
 import 'package:employeedata/widgetUI/role_selection_field.dart';
 import 'package:flutter/material.dart';
@@ -179,10 +180,10 @@ class _AddEditEmployeeScreenState extends State<AddEditEmployeeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             // Start Date Picker
-                            DateSelectionField(
+                            DateSelectionStart(
                               placeholder: AppStrings.noDate,
                               width: fieldWidth,
-                              controller:_startDateController ,
+                              controller: _startDateController,
                               initialDate: widget.employee == null
                                   ? null
                                   : dateFormat.parse(_startDateController.text),
@@ -203,7 +204,7 @@ class _AddEditEmployeeScreenState extends State<AddEditEmployeeScreen> {
                             ),
 
                             // End Date Picker
-                            DateSelectionField(
+                            DateSelectionEnd(
                               placeholder: AppStrings.noDate,
                               width: fieldWidth,
                               controller: _endDateController,
@@ -215,8 +216,13 @@ class _AddEditEmployeeScreenState extends State<AddEditEmployeeScreen> {
                                           .parse(_endDateController.text)),
                               onDateSelected: (date) {
                                 print("Selected Date: $date");
-                                _endDateController.text =
-                                    dateFormat.format(date!);
+
+                                if (date != null) {
+                                  _endDateController.text =
+                                      dateFormat.format(date);
+                                } else {
+                                  _endDateController.text = "";
+                                }
                               },
                             ),
                           ]),
