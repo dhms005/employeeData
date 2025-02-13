@@ -15,7 +15,6 @@ class RoleSelectionField extends StatefulWidget {
 }
 
 class _RoleSelectionFieldState extends State<RoleSelectionField> {
-
   void _showRoleBottomSheet() async {
     String? selectedRole = await showModalBottomSheet<String>(
       context: context,
@@ -25,9 +24,21 @@ class _RoleSelectionFieldState extends State<RoleSelectionField> {
       builder: (BuildContext context) {
         return Wrap(
           children: AppStrings.employeeRoles.map((role) {
-            return ListTile(
-              title: TextRobotoFont(title: role, textAlign: TextAlign.center,fontColor: AppColors.editTextColor,fontSize: 16,),
-              onTap: () => Navigator.pop(context, role),
+            return Container(
+              color: AppColors.mainBgColor,
+              margin: EdgeInsets.only(bottom: 0.7),
+              child: Container(
+                color: AppColors.mainWhiteColor,
+                child: ListTile(
+                  title: TextRobotoFont(
+                    title: role,
+                    textAlign: TextAlign.center,
+                    fontColor: AppColors.editTextColor,
+                    fontSize: 16,
+                  ),
+                  onTap: () => Navigator.pop(context, role),
+                ),
+              ),
             );
           }).toList(),
         );
@@ -102,7 +113,7 @@ class _RoleSelectionFieldState extends State<RoleSelectionField> {
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
               borderSide:
-              BorderSide(color: Colors.red, width: 1), // Red on focus
+                  BorderSide(color: Colors.red, width: 1), // Red on focus
             ),
             contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
           ),
