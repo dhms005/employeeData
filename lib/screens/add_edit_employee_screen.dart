@@ -98,6 +98,23 @@ class _AddEditEmployeeScreenState extends State<AddEditEmployeeScreen> {
             ? AppStrings.addEmployeeDetails
             : AppStrings.editEmployeeDetails,
         appBar: AppBar(),
+        actions: [
+          widget.employee != null
+              ? Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: GestureDetector(
+                    onTap: _deleteEmployee,
+                    child: SvgPicture.asset(
+                      AppImagePath.imgDelete,
+                      height: 24,
+                      width: 24,
+                      colorFilter: const ColorFilter.mode(
+                          AppColors.mainWhiteColor, BlendMode.srcIn),
+                    ),
+                  ),
+                )
+              : SizedBox(),
+        ],
       ),
       body: SafeArea(
         child: Form(
@@ -240,13 +257,6 @@ class _AddEditEmployeeScreenState extends State<AddEditEmployeeScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    // ElevatedButton(
-                    //   onPressed: _saveEmployee,
-                    //   child: Text(widget.employee == null
-                    //       ? "Add Employee"
-                    //       : "Update Employee"),
-                    // ),
-
                     GestureDetector(
                       onTap: () => Navigator.pop(context),
                       child: LightFixedButton(text: AppStrings.cancel),
@@ -261,12 +271,6 @@ class _AddEditEmployeeScreenState extends State<AddEditEmployeeScreen> {
                   ],
                 ),
               ),
-              if (widget.employee != null)
-                TextButton(
-                  onPressed: _deleteEmployee,
-                  child: Text("Delete Employee",
-                      style: TextStyle(color: Colors.red)),
-                ),
             ],
           ),
         ),

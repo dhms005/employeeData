@@ -1,10 +1,13 @@
+import 'package:employeedata/utils/appImagePath.dart';
+import 'package:employeedata/utils/appColors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String appTitle;
   final AppBar appBar;
-
-  const CustomAppBar({super.key, required this.appTitle, required this.appBar});
+  final List<Widget>? actions;
+  const CustomAppBar({super.key, required this.appTitle, required this.appBar,this.actions});
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +18,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: TextStyle(
             fontFamily: 'Roboto', fontSize: 18, fontWeight: FontWeight.values[5]),
       ),
+      actions: actions
     );
   }
 
