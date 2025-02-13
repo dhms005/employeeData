@@ -113,7 +113,16 @@ class EmployeeListScreen extends StatelessWidget {
         alignment: Alignment.centerRight,
         padding: EdgeInsets.symmetric(horizontal: 20),
         color: Colors.red,
-        child: Icon(Icons.delete, color: Colors.white),
+        child: Padding(
+          padding: EdgeInsets.all(14), // Adjust padding if needed
+          child: SvgPicture.asset(
+            AppImagePath.imgDelete,
+            height: 24,
+            width: 24,
+            colorFilter: const ColorFilter.mode(AppColors.mainWhiteColor,
+                BlendMode.srcIn), // Optional: Change color
+          ),
+        ),
       ),
       onDismissed: (direction) {
         BlocProvider.of<EmployeeBloc>(context).add(DeleteEmployee(employee.id));
