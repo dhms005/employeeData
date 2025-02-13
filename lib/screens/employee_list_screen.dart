@@ -99,7 +99,7 @@ class EmployeeListScreen extends StatelessWidget {
         title: title,
         fontColor: AppColors.mainColor,
         fontSize: 16,
-        fontWeight: FontWeight.values[5],
+        fontWeight: FontWeight.w500,
       ),
     );
   }
@@ -126,6 +126,25 @@ class EmployeeListScreen extends StatelessWidget {
       ),
       onDismissed: (direction) {
         BlocProvider.of<EmployeeBloc>(context).add(DeleteEmployee(employee.id));
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: TextRobotoFont(
+              title: AppStrings.employeeDataHasBeenDeleted,
+              fontWeight: FontWeight.normal,
+              fontSize: 15,
+              fontColor: AppColors.mainWhiteColor,
+            ),
+            action: SnackBarAction(
+              label: AppStrings.undo,
+              onPressed: () {
+                BlocProvider.of<EmployeeBloc>(context)
+                    .add(AddEmployee(employee));
+              },
+            ),
+            duration: Duration(seconds: 3),
+          ),
+        );
       },
       child: GestureDetector(
         onTap: () {
@@ -148,7 +167,7 @@ class EmployeeListScreen extends StatelessWidget {
                 title: employee.employeeName,
                 fontColor: AppColors.editTextColor,
                 fontSize: 16,
-                fontWeight: FontWeight.values[5],
+                fontWeight: FontWeight.w500,
               ),
               TextRobotoFont(
                 title: employee.employeeRole,

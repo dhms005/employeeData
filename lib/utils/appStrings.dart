@@ -17,6 +17,8 @@ class AppStrings {
   static const String nextMonday = "Next Monday";
   static const String nextTuesday = "Next Tuesday";
   static const String afterOneWeek = "After 1 week";
+  static const String employeeDataHasBeenDeleted = "Employee data has been deleted";
+  static const String undo = "Undo";
 
 
 

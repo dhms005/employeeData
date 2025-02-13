@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: AppColors.mainDarkColor, // Change to your desired color
@@ -36,9 +35,13 @@ class MyApp extends StatelessWidget {
             backgroundColor: AppColors.mainColor, // AppBar color
             foregroundColor: AppColors.mainWhiteColor, // Text & icon color
             elevation: 2, // Shadow effect
-
           ),
           useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: AppColors.mainColor, // Affects other colors in the app
+            primary: AppColors.mainColor, // Primary color
+            secondary: Colors.orange, // Accent color
+          ),
         ),
         // theme: ThemeData(
         //   // This is the theme of your application.
