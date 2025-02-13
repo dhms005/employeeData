@@ -13,6 +13,10 @@ class AppStrings {
   static const String previousEmployees = "Previous employees";
   static const String swipeLeftToDelete = "Swipe left to delete";
   static const String noEmployeeRecordsFound = "No employee records found";
+  static const String today = "Today";
+  static const String nextMonday = "Next Monday";
+  static const String nextTuesday = "Next Tuesday";
+  static const String afterOneWeek = "After 1 week";
 
 
 

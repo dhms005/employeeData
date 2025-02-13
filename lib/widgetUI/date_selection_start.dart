@@ -19,7 +19,8 @@ class DateSelectionStart extends StatefulWidget {
   TextEditingController controller;
 
   DateSelectionStart(
-      {super.key, required this.placeholder,
+      {super.key,
+      required this.placeholder,
       required this.onDateSelected,
       required this.width,
       required this.controller,
@@ -145,7 +146,7 @@ class _DateSelectionStartState extends State<DateSelectionStart> {
                                   Expanded(
                                     child: _quickSelectButton(
                                         context,
-                                        "Today",
+                                        AppStrings.today,
                                         DateTime.now(),
                                         (date) => setModalState(
                                             () => selectedDay = date)),
@@ -154,7 +155,7 @@ class _DateSelectionStartState extends State<DateSelectionStart> {
                                   Expanded(
                                     child: _quickSelectButton(
                                         context,
-                                        "Next Monday",
+                                        AppStrings.nextMonday,
                                         _getNextWeekday(1),
                                         (date) => setModalState(
                                             () => selectedDay = date)),
@@ -167,7 +168,7 @@ class _DateSelectionStartState extends State<DateSelectionStart> {
                                   Expanded(
                                     child: _quickSelectButton(
                                         context,
-                                        "Next Tuesday",
+                                        AppStrings.nextTuesday,
                                         _getNextWeekday(2),
                                         (date) => setModalState(
                                             () => selectedDay = date)),
@@ -176,7 +177,7 @@ class _DateSelectionStartState extends State<DateSelectionStart> {
                                   Expanded(
                                     child: _quickSelectButton(
                                         context,
-                                        "After 1 week",
+                                        AppStrings.afterOneWeek,
                                         DateTime.now().add(Duration(days: 7)),
                                         (date) => setModalState(
                                             () => selectedDay = date)),
@@ -188,32 +189,93 @@ class _DateSelectionStartState extends State<DateSelectionStart> {
                                 focusedDay: selectedDay,
                                 firstDay: DateTime.utc(2020, 1, 1),
                                 lastDay: DateTime.utc(2030, 12, 31),
+
+                                // Custom Weekday Text (Sun, Mon, Tue, ...)
+                                daysOfWeekStyle: DaysOfWeekStyle(
+                                  weekdayStyle: TextStyle(
+                                    fontFamily: 'Roboto', // Apply custom font
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                    color: AppColors.editTextColor,
+                                  ),
+                                  weekendStyle: TextStyle(
+                                    fontFamily: 'Roboto',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                    color: AppColors
+                                        .editTextColor, // Customize weekend color
+                                  ),
+                                ),
+
                                 calendarStyle: CalendarStyle(
                                   outsideDaysVisible: false,
                                   selectedDecoration: BoxDecoration(
-                                    color: Colors.blue,
+                                    color: AppColors.mainColor,
                                     shape: BoxShape.circle,
                                   ),
                                   todayDecoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     border: Border.all(
-                                      color: Colors.blue,
+                                      color: AppColors.mainColor,
                                       // Change to your preferred blue color
                                       width: 1, // Adjust border thickness
                                     ),
                                   ),
                                   todayTextStyle: TextStyle(
-                                    color: Colors
-                                        .black, // Keep today's text black when unselected
+                                    fontFamily: 'Roboto',
+                                    // Specify font family explicitly
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 14,
+                                    color: AppColors
+                                        .editTextColor, // Keep today's text black when unselected
                                     // fontWeight: FontWeight.bold,
                                   ),
                                   selectedTextStyle: TextStyle(
+                                    fontFamily: 'Roboto',
+                                    // Specify font family explicitly
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 14,
                                     color: Colors
                                         .white, // White text for selected date
                                   ),
+                                  defaultTextStyle: TextStyle(
+                                      fontFamily: 'Roboto',
+                                      // Specify font family explicitly
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 14,
+                                      color: AppColors.editTextColor),
                                 ),
-                                headerStyle:
-                                    HeaderStyle(formatButtonVisible: false),
+                                // headerStyle:
+                                //     HeaderStyle(formatButtonVisible: false),
+                                headerStyle: HeaderStyle(
+                                  titleCentered: true,
+                                  // Center the month title
+                                  formatButtonVisible: false,
+                                  // Hide format button
+                                  titleTextStyle: TextStyle(
+                                    fontFamily: 'Roboto', // Set your font
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.values[5],
+                                    color: AppColors.editTextColor,
+                                  ),
+                                  leftChevronIcon: SvgPicture.asset(
+                                    AppImagePath.imgPrevious,
+                                    height: 20,
+                                    width: 20,
+                                    colorFilter: const ColorFilter.mode(
+                                        AppColors.lightTextColor,
+                                        BlendMode.srcIn),
+                                  ),
+                                  // Custom previous icon
+                                  rightChevronIcon: SvgPicture.asset(
+                                    AppImagePath.imgNext,
+                                    height: 20,
+                                    width: 20,
+                                    colorFilter: const ColorFilter.mode(
+                                        AppColors.lightTextColor,
+                                        BlendMode.srcIn),
+                                  ),
+                                ),
                                 selectedDayPredicate: (day) =>
                                     isSameDay(day, selectedDay),
                                 onDaySelected: (selected, focused) {
@@ -223,7 +285,7 @@ class _DateSelectionStartState extends State<DateSelectionStart> {
                             ],
                           ),
                         ),
-                    
+
                         // SizedBox(height: 16),
                         Container(
                           height: 1,
@@ -246,7 +308,7 @@ class _DateSelectionStartState extends State<DateSelectionStart> {
                                   //       ? "Add Employee"
                                   //       : "Update Employee"),
                                   // ),
-                    
+
                                   GestureDetector(
                                     onTap: () => Navigator.pop(context),
                                     child: LightFixedButton(
@@ -282,7 +344,7 @@ class _DateSelectionStartState extends State<DateSelectionStart> {
   /// 📌 Quick Select Button Widget
   Widget _quickSelectButton(BuildContext context, String text, DateTime date,
       Function(DateTime) onSelect) {
-    return text == "Next Monday"
+    return text == AppStrings.nextMonday
         ? GestureDetector(
             onTap: () => onSelect(date), child: DarkButton(text: text))
         : GestureDetector(
