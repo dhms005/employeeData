@@ -75,7 +75,7 @@ class EmployeeListScreen extends StatelessWidget {
               ),
             );
           } else {
-            return Center(child: Text("No Employees Found"));
+            return _buildEmptyState();
           }
         },
       ),
