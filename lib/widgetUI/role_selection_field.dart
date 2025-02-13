@@ -15,31 +15,6 @@ class RoleSelectionField extends StatefulWidget {
 }
 
 class _RoleSelectionFieldState extends State<RoleSelectionField> {
-  void _showRoleDialog() async {
-    String? role = await showDialog<String>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Select Role"),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: AppStrings.employeeRoles.map((role) {
-              return ListTile(
-                title: Text(role),
-                onTap: () => Navigator.pop(context, role),
-              );
-            }).toList(),
-          ),
-        );
-      },
-    );
-
-    if (role != null) {
-      setState(() {
-        widget.controller.text = role; // ✅ Store selected role in controller
-      });
-    }
-  }
 
   void _showRoleBottomSheet() async {
     String? selectedRole = await showModalBottomSheet<String>(
