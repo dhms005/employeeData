@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// 📌  UI for ActionBar
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String appTitle;
   final AppBar appBar;

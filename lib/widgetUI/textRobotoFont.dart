@@ -1,6 +1,7 @@
 import 'package:employeedata/utils/appColors.dart';
 import 'package:flutter/widgets.dart';
 
+/// 📌  UI for Common Text in apps
 class TextRobotoFont extends StatelessWidget {
   final String title;
   final bool isItalic;

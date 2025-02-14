@@ -3,6 +3,8 @@ import 'package:employeedata/utils/appColors.dart';
 import 'package:employeedata/utils/appImagePath.dart';
 import 'package:employeedata/utils/appStrings.dart';
 import 'package:employeedata/widgetUI/customAppBar.dart';
+import 'package:employeedata/widgetUI/employee_section_title.dart';
+import 'package:employeedata/widgetUI/empty_employee.dart';
 import 'package:employeedata/widgetUI/textRobotoFont.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +14,7 @@ import '../bloc/employee_bloc.dart';
 import '../bloc/employee_state.dart';
 import 'add_edit_employee_screen.dart';
 
+/// 📌 EmployeeList UI
 class EmployeeListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -25,19 +28,18 @@ class EmployeeListScreen extends StatelessWidget {
           if (state is EmployeeLoading) {
             return Center(child: CircularProgressIndicator());
           } else if (state is EmployeeLoaded) {
-            // 🏷️ Separate Employees into Current and Previous Lists
-
-            // Empty state UI
+            /// 📌 Empty state UI
             if (state.employees.isEmpty) {
-              return _buildEmptyState(); //
+              return EmptyEmployee(); //
             }
 
+            /// 📌 Separate Employees into Current and Previous Lists
             final currentEmployees =
                 state.employees.where((e) => e.employeeEndDate == "").toList();
             final previousEmployees =
                 state.employees.where((e) => e.employeeEndDate != "").toList();
 
-            // List UI
+            /// 📌 List UI
             return SafeArea(
               child: Container(
                 color: AppColors.lineColorColor,
@@ -47,21 +49,28 @@ class EmployeeListScreen extends StatelessWidget {
                       child: ListView(
                         padding: EdgeInsets.all(0),
                         children: [
-                          //  Current Employees Section
+                          /// 📌  Current Employees Section
                           if (currentEmployees.isNotEmpty)
-                            _sectionTitle(AppStrings.currentEmployees),
+
+                            /// 📌 Employees Section
+                            EmployeeSectionTitle(
+                                title: AppStrings.currentEmployees),
                           ...currentEmployees.map(
                               (employee) => _employeeCard(context, employee)),
 
-                          // Previous Employees Section
+                          /// 📌 Previous Employees Section
                           if (previousEmployees.isNotEmpty)
-                            _sectionTitle(AppStrings.previousEmployees),
+
+                            /// 📌 Employees Section
+                            EmployeeSectionTitle(
+                                title: AppStrings.previousEmployees),
                           ...previousEmployees.map(
                               (employee) => _employeeCard(context, employee)),
                         ],
                       ),
                     ),
                     // SizedBox(height: 20),
+                    /// 📌 Swipe Text
                     Container(
                         width: MediaQuery.of(context).size.width,
                         padding: EdgeInsets.all(16),
@@ -75,10 +84,13 @@ class EmployeeListScreen extends StatelessWidget {
               ),
             );
           } else {
-            return _buildEmptyState();
+            /// 📌 Empty state UI
+            return EmptyEmployee();
           }
         },
       ),
+
+      /// 📌 FloatButton
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.mainColor,
         shape: RoundedRectangleBorder(
@@ -90,25 +102,16 @@ class EmployeeListScreen extends StatelessWidget {
             MaterialPageRoute(builder: (_) => AddEditEmployeeScreen()),
           );
         },
-        child: Icon(Icons.add, color: Colors.white,size: 30,),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+          size: 30,
+        ),
       ),
     );
   }
 
-  /// 📌 Section Title Widget
-  Widget _sectionTitle(String title) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-      child: TextRobotoFont(
-        title: title,
-        fontColor: AppColors.mainColor,
-        fontSize: 16,
-        fontWeight: FontWeight.w500,
-      ),
-    );
-  }
-
-  /// 📌 Employee Card Widget with Swipe-to-Delete
+  /// 📌 UI for Employee Item with Swipe-to-Delete
   Widget _employeeCard(BuildContext context, employee) {
     return Dismissible(
       key: Key(employee.employeeName),
@@ -130,7 +133,6 @@ class EmployeeListScreen extends StatelessWidget {
       ),
       onDismissed: (direction) {
         BlocProvider.of<EmployeeBloc>(context).add(DeleteEmployee(employee.id));
-
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: TextRobotoFont(
@@ -158,6 +160,8 @@ class EmployeeListScreen extends StatelessWidget {
                 builder: (_) => AddEditEmployeeScreen(employee: employee)),
           );
         },
+
+        /// 📌 Employee Item UI
         child: Container(
           color: AppColors.mainWhiteColor,
           width: MediaQuery.of(context).size.width,
@@ -197,33 +201,6 @@ class EmployeeListScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  /// 📌 UI for Empty Employee List
-  Widget _buildEmptyState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Container(
-          //   width: 250,
-          //   height: 250,
-          //   child:
-          //       Image.asset('assets/images/not_data.png', fit: BoxFit.fitWidth),
-          // ),
-          SvgPicture.asset(
-            AppImagePath.imgNoData,
-            width: 250,
-          ),
-          TextRobotoFont(
-            title: AppStrings.noEmployeeRecordsFound,
-            fontColor: AppColors.editTextColor,
-            fontWeight: FontWeight.values[5],
-            fontSize: 17,
-          )
-        ],
       ),
     );
   }

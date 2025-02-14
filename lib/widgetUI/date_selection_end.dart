@@ -11,6 +11,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+/// 📌  UI for End Date selection
 class DateSelectionEnd extends StatefulWidget {
   final String placeholder;
   final ValueChanged<DateTime?> onDateSelected;
@@ -38,22 +39,6 @@ class _DateSelectionEndState extends State<DateSelectionEnd> {
   void initState() {
     super.initState();
     selectedDate = widget.initialDate;
-  }
-
-  Future<void> _pickDate(BuildContext context) async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-
-    if (picked != null) {
-      setState(() {
-        selectedDate = picked;
-      });
-      widget.onDateSelected(picked);
-    }
   }
 
   @override
@@ -108,7 +93,7 @@ class _DateSelectionEndState extends State<DateSelectionEnd> {
     );
   }
 
-  /// 📌 Function to show full-screen date picker
+  /// 📌 Function to show full-screen custom date picker
   Future<DateTime?> showFullScreenDatePicker(BuildContext context) async {
     DateTime? selectedDay = DateTime.now();
 
@@ -141,6 +126,8 @@ class _DateSelectionEndState extends State<DateSelectionEnd> {
                           child: Column(
                             // mainAxisSize: MainAxisSize.min,
                             children: [
+
+                              /// 📌 Top Button No Date and Today Date
                               Row(
                                 children: [
                                   Expanded(
@@ -160,7 +147,7 @@ class _DateSelectionEndState extends State<DateSelectionEnd> {
                                   ),
                                 ],
                               ),
-                              // 📆 Calendar
+                              /// 📌 Custom Calender
                               TableCalendar(
                                 focusedDay: selectedDay ?? DateTime.now(),
                                 selectedDayPredicate: (day) =>
@@ -261,12 +248,11 @@ class _DateSelectionEndState extends State<DateSelectionEnd> {
                           ),
                         ),
 
-                        // SizedBox(height: 16),
                         Container(
                           height: 1,
                           color: AppColors.editTextBorderColor,
                         ),
-                        // ✅ Save/Cancel buttons
+                        /// 📌 UI for Save/Cancel buttons
                         Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Row(
@@ -279,13 +265,6 @@ class _DateSelectionEndState extends State<DateSelectionEnd> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  // ElevatedButton(
-                                  //   onPressed: _saveEmployee,
-                                  //   child: Text(widget.employee == null
-                                  //       ? "Add Employee"
-                                  //       : "Update Employee"),
-                                  // ),
-
                                   GestureDetector(
                                     onTap: () => Navigator.pop(context),
                                     child: LightFixedButton(
@@ -318,7 +297,7 @@ class _DateSelectionEndState extends State<DateSelectionEnd> {
     );
   }
 
-  /// 📌 Quick Select Button Widget
+  /// 📌 Quick Select Button
   Widget _quickSelectButton(BuildContext context, String text, DateTime? date,
       Function(DateTime?) onSelect) {
     return text == AppStrings.noDate

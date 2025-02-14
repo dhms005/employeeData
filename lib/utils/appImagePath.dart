@@ -1,3 +1,5 @@
+
+/// 📌  All Images Path
 class AppImagePath {
   static const String imgPerson = "assets/svg/person.svg";
   static const String imgWork = "assets/svg/work.svg";

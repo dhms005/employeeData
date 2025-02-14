@@ -1,3 +1,5 @@
+
+/// 📌  Current String & Array
 class AppStrings {
   static const String employeeList = "Employee List";
   static const String addEmployeeDetails = "Add Employee Details";

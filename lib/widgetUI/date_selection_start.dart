@@ -11,6 +11,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+/// 📌  UI for Start Date selection
 class DateSelectionStart extends StatefulWidget {
   final String placeholder;
   final ValueChanged<DateTime?> onDateSelected;
@@ -92,7 +93,7 @@ class _DateSelectionStartState extends State<DateSelectionStart> {
     );
   }
 
-  /// 📌 Function to show full-screen date picker
+  /// 📌 Function to show full-screen custom date picker
   Future<DateTime?> showFullScreenDatePicker(BuildContext context) async {
     DateTime selectedDay = DateTime.now();
 
@@ -123,6 +124,7 @@ class _DateSelectionStartState extends State<DateSelectionStart> {
                         Padding(
                           padding: const EdgeInsets.all(16),
                           child: Column(
+                            /// 📌 Top Button Today/Next Monday/Tuesday/week Date
                             // mainAxisSize: MainAxisSize.min,
                             children: [
                               Row(
@@ -168,7 +170,7 @@ class _DateSelectionStartState extends State<DateSelectionStart> {
                                   ),
                                 ],
                               ),
-                              // 📆 Calendar
+                              /// 📌 Custom Calender
                               TableCalendar(
                                 focusedDay: selectedDay,
                                 firstDay: DateTime.utc(2020, 1, 1),
@@ -275,7 +277,7 @@ class _DateSelectionStartState extends State<DateSelectionStart> {
                           height: 1,
                           color: AppColors.editTextBorderColor,
                         ),
-                        // ✅ Save/Cancel buttons
+                        /// 📌 UI for Save/Cancel buttons
                         Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Row(
@@ -325,7 +327,7 @@ class _DateSelectionStartState extends State<DateSelectionStart> {
     );
   }
 
-  /// 📌 Quick Select Button Widget
+  /// 📌 Quick Select Button
   Widget _quickSelectButton(BuildContext context, String text, DateTime date,
       Function(DateTime) onSelect) {
     return text == AppStrings.nextMonday

@@ -2,6 +2,7 @@ import 'package:employeedata/widgetUI/textRobotoFont.dart';
 import 'package:employeedata/utils/appColors.dart';
 import 'package:flutter/material.dart';
 
+/// 📌  UI for Button
 class DarkFixedButton extends StatelessWidget {
   final String text;
   final Color backColor;

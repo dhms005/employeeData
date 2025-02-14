@@ -4,17 +4,18 @@ import 'package:employeedata/utils/appStrings.dart';
 import 'package:employeedata/widgetUI/textRobotoFont.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
+/// 📌  UI for Select Role
 class RoleSelectionField extends StatefulWidget {
   final TextEditingController controller;
 
-  RoleSelectionField({required this.controller});
+  const RoleSelectionField({required this.controller});
 
   @override
   _RoleSelectionFieldState createState() => _RoleSelectionFieldState();
 }
 
 class _RoleSelectionFieldState extends State<RoleSelectionField> {
+  /// 📌  UI for Show Role Dialog
   void _showRoleBottomSheet() async {
     String? selectedRole = await showModalBottomSheet<String>(
       context: context,
