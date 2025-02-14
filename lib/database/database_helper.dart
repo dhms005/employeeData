@@ -1,6 +1,9 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../models/employee_model.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
@@ -16,9 +19,18 @@ class DatabaseHelper {
   }
 
   Future<Database> _initDB() async {
+    if (kIsWeb) {
+      // Initialize for web
+      databaseFactory = databaseFactoryFfiWeb;
+    } else {
+      // Initialize for desktop (Windows, Mac, Linux)
+      sqfliteFfiInit();
+      databaseFactory = databaseFactoryFfi;
+    }
+
     String path = join(await getDatabasesPath(), 'employee.db');
-    return await openDatabase(
-      path,
+
+    return await databaseFactory.openDatabase(path, options: OpenDatabaseOptions(
       version: 1,
       onCreate: (db, version) async {
         await db.execute('''
@@ -31,7 +43,7 @@ class DatabaseHelper {
           )
         ''');
       },
-    );
+    ));
   }
 
   Future<int> insertEmployee(Employee employee) async {
