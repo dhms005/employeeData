@@ -19,6 +19,7 @@ class AppStrings {
   static const String afterOneWeek = "After 1 week";
   static const String employeeDataHasBeenDeleted = "Employee data has been deleted";
   static const String undo = "Undo";
+  static const String pleaseSelectStartDate = "Please Select Start Date";
 
 
 

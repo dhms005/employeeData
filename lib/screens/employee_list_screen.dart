@@ -80,13 +80,17 @@ class EmployeeListScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        backgroundColor: AppColors.mainColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // Rounded Rectangle Shape
+        ),
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => AddEditEmployeeScreen()),
           );
         },
+        child: Icon(Icons.add, color: Colors.white,size: 30,),
       ),
     );
   }

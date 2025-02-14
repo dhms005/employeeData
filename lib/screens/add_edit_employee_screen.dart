@@ -7,6 +7,7 @@ import 'package:employeedata/widgetUI/date_selection_end.dart';
 import 'package:employeedata/widgetUI/date_selection_start.dart';
 import 'package:employeedata/widgetUI/light_fixed_button.dart';
 import 'package:employeedata/widgetUI/role_selection_field.dart';
+import 'package:employeedata/widgetUI/textRobotoFont.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -67,14 +68,30 @@ class _AddEditEmployeeScreenState extends State<AddEditEmployeeScreen> {
 
       final employeeBloc = BlocProvider.of<EmployeeBloc>(context);
       if (widget.employee == null) {
-        // Adding new employee
-        employeeBloc.add(AddEmployee(employee));
+        if (_startDateController.text != "") {
+          // Adding new employee
+          employeeBloc.add(AddEmployee(employee));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: TextRobotoFont(
+                title: AppStrings.pleaseSelectStartDate,
+                fontWeight: FontWeight.normal,
+                fontSize: 15,
+                fontColor: AppColors.mainWhiteColor,
+              ),
+              duration: Duration(seconds: 3),
+            ),
+          );
+        }
       } else {
         // Updating existing employee
         employeeBloc.add(UpdateEmployee(employee));
       }
 
-      Navigator.pop(context); // Close the screen
+      if (_startDateController.text != "") {
+        Navigator.pop(context);
+      } // Close the screen
     }
   }
 
@@ -93,6 +110,7 @@ class _AddEditEmployeeScreenState extends State<AddEditEmployeeScreen> {
     final DateFormat dateFormat = DateFormat('d MMM yyyy');
 
     return Scaffold(
+      backgroundColor: AppColors.mainWhiteColor,
       appBar: CustomAppBar(
         appTitle: widget.employee == null
             ? AppStrings.addEmployeeDetails
@@ -210,7 +228,6 @@ class _AddEditEmployeeScreenState extends State<AddEditEmployeeScreen> {
                                 _startDateController.text =
                                     dateFormat.format(date!);
                               },
-
                             ),
 
                             // Arrow Icon in Center

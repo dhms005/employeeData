@@ -4,6 +4,7 @@ import '../models/employee_model.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'dart:io';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
@@ -19,31 +20,41 @@ class DatabaseHelper {
   }
 
   Future<Database> _initDB() async {
+    late DatabaseFactory dbFactory;
+    String path;
+
     if (kIsWeb) {
-      // Initialize for web
-      databaseFactory = databaseFactoryFfiWeb;
-    } else {
-      // Initialize for desktop (Windows, Mac, Linux)
+      // Use Web Database Factory
+      dbFactory = databaseFactoryFfiWeb;
+      path = 'employee.db';  // Web does not use file paths
+    } else if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+      // Use sqflite_common_ffi for Desktop
       sqfliteFfiInit();
-      databaseFactory = databaseFactoryFfi;
+      dbFactory = databaseFactoryFfi;
+      path = join(await getDatabasesPath(), 'employee.db');
+    } else {
+      // Use Default SQLite for Mobile (Android/iOS)
+      dbFactory = databaseFactory; // Fix for mobile
+      path = join(await getDatabasesPath(), 'employee.db');
     }
 
-    String path = join(await getDatabasesPath(), 'employee.db');
-
-    return await databaseFactory.openDatabase(path, options: OpenDatabaseOptions(
-      version: 1,
-      onCreate: (db, version) async {
-        await db.execute('''
-          CREATE TABLE employees (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            employeeName TEXT,
-            employeeRole TEXT,
-            employeeStartDate TEXT,
-            employeeEndDate TEXT
-          )
-        ''');
-      },
-    ));
+    return await dbFactory.openDatabase(
+      path,
+      options: OpenDatabaseOptions(
+        version: 1,
+        onCreate: (db, version) async {
+          await db.execute('''
+            CREATE TABLE employees (
+              id INTEGER PRIMARY KEY AUTOINCREMENT,
+              employeeName TEXT,
+              employeeRole TEXT,
+              employeeStartDate TEXT,
+              employeeEndDate TEXT
+            )
+          ''');
+        },
+      ),
+    );
   }
 
   Future<int> insertEmployee(Employee employee) async {
