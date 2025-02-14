@@ -45,12 +45,13 @@ class _DateSelectionEndState extends State<DateSelectionEnd> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        DateTime? pickedDate = await showFullScreenDatePicker(context);
+        DateTime? pickedDate =
+            await showFullScreenDatePicker(context, selectedDate);
         // if (pickedDate != null) {
-          setState(() {
-            selectedDate = pickedDate;
-            widget.onDateSelected(pickedDate);
-          });
+        setState(() {
+          selectedDate = pickedDate;
+          widget.onDateSelected(pickedDate);
+        });
         // }
       },
       child: Container(
@@ -94,8 +95,17 @@ class _DateSelectionEndState extends State<DateSelectionEnd> {
   }
 
   /// 📌 Function to show full-screen custom date picker
-  Future<DateTime?> showFullScreenDatePicker(BuildContext context) async {
-    DateTime? selectedDay = DateTime.now();
+  Future<DateTime?> showFullScreenDatePicker(
+      BuildContext context, DateTime? selectedDate) async {
+    DateTime? selectedDay;
+    DateTime? olderSelectedDay;
+    if (selectedDate != null) {
+      selectedDay = selectedDate;
+      olderSelectedDay = selectedDate;
+    } else {
+      selectedDay = DateTime.now();
+      olderSelectedDay = null;
+    }
 
     return await showGeneralDialog<DateTime>(
       context: context,
@@ -126,7 +136,6 @@ class _DateSelectionEndState extends State<DateSelectionEnd> {
                           child: Column(
                             // mainAxisSize: MainAxisSize.min,
                             children: [
-
                               /// 📌 Top Button No Date and Today Date
                               Row(
                                 children: [
@@ -134,7 +143,8 @@ class _DateSelectionEndState extends State<DateSelectionEnd> {
                                     child: GestureDetector(
                                         onTap: () => setModalState(
                                             () => selectedDay = null),
-                                        child: DarkButton(text: AppStrings.noDate)),
+                                        child: DarkButton(
+                                            text: AppStrings.noDate)),
                                   ),
                                   SizedBox(width: 16),
                                   Expanded(
@@ -147,6 +157,7 @@ class _DateSelectionEndState extends State<DateSelectionEnd> {
                                   ),
                                 ],
                               ),
+
                               /// 📌 Custom Calender
                               TableCalendar(
                                 focusedDay: selectedDay ?? DateTime.now(),
@@ -167,7 +178,8 @@ class _DateSelectionEndState extends State<DateSelectionEnd> {
                                     fontFamily: 'Roboto',
                                     fontSize: 14,
                                     fontWeight: FontWeight.normal,
-                                    color: AppColors.editTextColor, // Customize weekend color
+                                    color: AppColors
+                                        .editTextColor, // Customize weekend color
                                   ),
                                 ),
 
@@ -190,7 +202,8 @@ class _DateSelectionEndState extends State<DateSelectionEnd> {
                                     // Specify font family explicitly
                                     fontWeight: FontWeight.normal,
                                     fontSize: 14,
-                                    color: AppColors.editTextColor, // Keep today's text black when unselected
+                                    color: AppColors
+                                        .editTextColor, // Keep today's text black when unselected
                                     // fontWeight: FontWeight.bold,
                                   ),
                                   selectedTextStyle: TextStyle(
@@ -198,7 +211,8 @@ class _DateSelectionEndState extends State<DateSelectionEnd> {
                                     // Specify font family explicitly
                                     fontWeight: FontWeight.normal,
                                     fontSize: 14,
-                                    color: Colors.white, // White text for selected date
+                                    color: Colors
+                                        .white, // White text for selected date
                                   ),
                                   defaultTextStyle: TextStyle(
                                       fontFamily: 'Roboto',
@@ -252,6 +266,7 @@ class _DateSelectionEndState extends State<DateSelectionEnd> {
                           height: 1,
                           color: AppColors.editTextBorderColor,
                         ),
+
                         /// 📌 UI for Save/Cancel buttons
                         Padding(
                           padding: const EdgeInsets.all(16.0),
@@ -266,7 +281,8 @@ class _DateSelectionEndState extends State<DateSelectionEnd> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   GestureDetector(
-                                    onTap: () => Navigator.pop(context),
+                                    onTap: () =>
+                                        Navigator.pop(context, olderSelectedDay),
                                     child: LightFixedButton(
                                         text: AppStrings.cancel),
                                   ),

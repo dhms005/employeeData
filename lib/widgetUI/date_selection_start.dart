@@ -45,7 +45,8 @@ class _DateSelectionStartState extends State<DateSelectionStart> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        DateTime? pickedDate = await showFullScreenDatePicker(context);
+        DateTime? pickedDate =
+            await showFullScreenDatePicker(context, selectedDate);
         if (pickedDate != null) {
           setState(() {
             selectedDate = pickedDate;
@@ -94,8 +95,14 @@ class _DateSelectionStartState extends State<DateSelectionStart> {
   }
 
   /// 📌 Function to show full-screen custom date picker
-  Future<DateTime?> showFullScreenDatePicker(BuildContext context) async {
-    DateTime selectedDay = DateTime.now();
+  Future<DateTime?> showFullScreenDatePicker(
+      BuildContext context, DateTime? selectedDate) async {
+    DateTime selectedDay;
+    if (selectedDate != null) {
+      selectedDay = selectedDate;
+    } else {
+      selectedDay = DateTime.now();
+    }
 
     return await showGeneralDialog<DateTime>(
       context: context,
@@ -170,6 +177,7 @@ class _DateSelectionStartState extends State<DateSelectionStart> {
                                   ),
                                 ],
                               ),
+
                               /// 📌 Custom Calender
                               TableCalendar(
                                 focusedDay: selectedDay,
@@ -277,6 +285,7 @@ class _DateSelectionStartState extends State<DateSelectionStart> {
                           height: 1,
                           color: AppColors.editTextBorderColor,
                         ),
+
                         /// 📌 UI for Save/Cancel buttons
                         Padding(
                           padding: const EdgeInsets.all(16.0),
